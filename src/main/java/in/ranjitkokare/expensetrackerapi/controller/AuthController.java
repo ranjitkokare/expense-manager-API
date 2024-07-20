@@ -33,6 +33,7 @@ public class AuthController {
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authModel.getEmail(), authModel.getPassword()));
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+		//here authentication obj stores loggedIn user and it is hold by context holder
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 	
