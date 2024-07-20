@@ -4,6 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import in.ranjitkokare.expensetrackerapi.entity.User;
+import java.util.List;
+import java.util.Optional;
+
 
 //Jpa repository actually contain @repositiry annotation in SimpleJpaRepository
 @Repository //then also we add no issue
@@ -11,4 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long>{//(Entity name
 	
 	//check email exists or not
 	Boolean existsByEmail(String email);
+	
+	Optional<User> findByEmail(String email);
 }
