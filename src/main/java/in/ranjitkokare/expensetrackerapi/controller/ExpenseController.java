@@ -2,8 +2,6 @@ package in.ranjitkokare.expensetrackerapi.controller;
 
 
 import java.sql.Date;
-
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import in.ranjitkokare.expensetrackerapi.entity.Expense;
 import in.ranjitkokare.expensetrackerapi.service.ExpenseService;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @RestController
 public class ExpenseController {
