@@ -7,23 +7,24 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import in.ranjitkokare.expensetrackerapi.dto.ExpenseDTO;
 import in.ranjitkokare.expensetrackerapi.entity.Expense;
 
 public interface ExpenseService {
 	
-	Page<Expense> getAllExpenses(Pageable page);
+	List<ExpenseDTO> getAllExpenses(Pageable page);
 	
-	Expense getExpenseById(Long id);
+	ExpenseDTO getExpenseById(String expenseId);
 	
-	void deleteExpenseById(Long id);
+	void deleteExpenseById(String expenseId);
 	
-	Expense saveExpenseDetails(Expense expense);
+	ExpenseDTO saveExpenseDetails(ExpenseDTO expenseDTO);
 	
-	Expense updateExpenseDetails(Long id, Expense expense);
+	ExpenseDTO updateExpenseDetails(String expenseId, ExpenseDTO expenseDTO);
 	
-	List<Expense> readByCategory(String category, Pageable page);
+	List<ExpenseDTO> readByCategory(String category, Pageable page);
 	
-	List<Expense> readByName(String name, Pageable page);
+	List<ExpenseDTO> readByName(String name, Pageable page);
 	
-	List<Expense> readByDate(Date startDate, Date endDate, Pageable page);
+	List<ExpenseDTO> readByDate(Date startDate, Date endDate, Pageable page);
 }
