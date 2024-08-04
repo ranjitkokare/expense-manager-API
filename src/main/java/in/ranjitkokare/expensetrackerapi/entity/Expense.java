@@ -1,7 +1,6 @@
 package in.ranjitkokare.expensetrackerapi.entity;
 
 import java.math.BigDecimal;
-
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -12,19 +11,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,28 +30,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "tbl_expenses")
+@Builder
 public class Expense {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "expense_name")
-	@NotBlank(message = "Expense name must not be null")
-	@Size(min = 3,message = "Expense name must be atleast 3 characters")
-	private String name;
+	@Column(unique = true)
+	private String expenseId;
 	
+	@Column(name = "expense_name")
+	private String name;
 	
 	private String description;
 	
-	@NotNull(message = "Expense amount should not be null")
 	@Column(name = "expense_amount")
 	private BigDecimal amount;
 	
-	@NotBlank(message = "Category should not be null")
-	private String category;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "category_id",nullable = false)//many expense are mapped to a single category
+	@OnDelete(action = OnDeleteAction.RESTRICT) //throw exception that some of the expenses are mapped to the category
+	//first delete that expenses and then you can delete the category
+	private CategoryEntity category;
 	
-	@NotNull(message = "Date must not be null")
 	private Date date;
 	
 	@Column(name = "created_at", nullable = false, updatable = false)

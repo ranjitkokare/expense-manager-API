@@ -10,25 +10,26 @@ import org.springframework.stereotype.Repository;
 
 import in.ranjitkokare.expensetrackerapi.entity.Expense;
 
-
-
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
-	
-	//SELECT * FROM tbl_expense WHERE user_id=? AND category=?
+
+	// SELECT * FROM tbl_expense WHERE user_id=? AND category=?
 	Page<Expense> findByUserIdAndCategory(Long userId, String category, Pageable page);
 
-	//SELECT * FROM tbl_expense WHERE user_id=? AND name LIKE '%keyword%'
+	// SELECT * FROM tbl_expense WHERE user_id=? AND category=?
+	Page<Expense> findByUserIdAndCategoryId(Long userId, Long categoryId, Pageable page);
+
+	// SELECT * FROM tbl_expense WHERE user_id=? AND name LIKE '%keyword%'
 	Page<Expense> findByUserIdAndNameContaining(Long userId, String name, Pageable page);
-	
-	//SELECT * FROM tbl_expense WHERE user_id=? AND date BETWEEN 'startDate' AND 'endDate'
+
+	// SELECT * FROM tbl_expense WHERE user_id=? AND date BETWEEN 'startDate' AND
+	// 'endDate'
 	Page<Expense> findByUserIdAndDateBetween(Long userId, Date startDate, Date endDate, Pageable page);
-	
-	
-	
-	//SELECT * FROM tbl_expense WHERE user_id=?
+
+	// SELECT * FROM tbl_expense WHERE user_id=?
 	Page<Expense> findByUserId(Long id, Pageable page);
-	
-	//SELECT * FROM tbl_expense WHERE user_id=? AND id=?
-	Optional<Expense> findByUserIdAndId(Long userId, Long expenseId);//provides is isPresent() method
+
+	// SELECT * FROM tbl_expense WHERE user_id=? AND id=?
+	Optional<Expense> findByUserIdAndExpenseId(Long userId, String expenseId);// provides is isPresent() method
+
 }

@@ -12,6 +12,39 @@ import in.ranjitkokare.expensetrackerapi.entity.CategoryEntity;
  * JPA repository for category entity
  * @author Ranjit Kokare
  */
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>{
 	
 	/**
@@ -40,4 +73,13 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>{
 	 * @return boolean
 	 */
 	boolean existsByNameAndUserId(String name , Long userId);
+	
+	
+	/**
+	 * It retrieves the category by name and user id
+	 * @param name
+	 * @param userId
+	 * @return Optional<CategoryEntity>
+	 */
+	Optional<CategoryEntity> findByNameAndUserId(String name, Long userId);
 }

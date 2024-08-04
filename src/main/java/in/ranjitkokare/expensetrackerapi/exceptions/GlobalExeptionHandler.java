@@ -14,13 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import in.ranjitkokare.expensetrackerapi.entity.ErrorObject;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExeptionHandler extends ResponseEntityExceptionHandler{ //as soon as we run app spring will create obj. of this class
 	
 	//method to catch the exception for expense not found
@@ -65,7 +66,19 @@ public class GlobalExeptionHandler extends ResponseEntityExceptionHandler{ //as 
 			return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-			@Override
+		@ExceptionHandler(ItemAlreadyExistsException.class)
+		public ResponseEntity<ErrorObject> handleItemExistsException(ItemAlreadyExistsException ex, WebRequest request) {
+			
+			ErrorObject errorObject = new ErrorObject();
+			
+			errorObject.setStatusCode(HttpStatus.CONFLICT.value());
+			
+			errorObject.setMessage(ex.getMessage());
+			
+			errorObject.setTimestamp(new Date());
+			
+			return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.CONFLICT);
+		}
 			protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 					HttpHeaders headers, HttpStatus status, WebRequest request) {
 			
