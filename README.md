@@ -27,7 +27,7 @@ A production-ready REST API for managing expenses, built with Spring Boot, Sprin
 - **Backend**: Java, Spring Boot, Spring Security, Spring Data JPA, Lombok
 - **Security**: JWT (JSON Web Token), BCrypt
 - **Database**: MySQL, MongoDB, MongoDB Atlas
-- **Deployment**: Heroku, AWS, Docker
+- **Deployment**: AWS, Docker
 - **Testing**: Postman
 
 ## Getting Started
@@ -36,4 +36,4 @@ To get a local copy up and running follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/ExpenseManagerAPI.git
+   git clone https://github.com/ranjitkokare/expense-manager-API.git
