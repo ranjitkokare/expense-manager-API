@@ -1,5 +1,6 @@
 package in.ranjitkokare.expensetrackerapi.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,13 +16,13 @@ import in.ranjitkokare.expensetrackerapi.exceptions.ResourceNotFoundException;
 import in.ranjitkokare.expensetrackerapi.repository.UserRepository;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 	
-	@Autowired
-	private PasswordEncoder bcryptEncoder;
+	private final PasswordEncoder bcryptEncoder;
 	//inject UserRepository
-	@Autowired
-	UserRepository userRepository;
+
+	private final UserRepository userRepository;
 	
 	@Override
 	public User createUser(UserModel user) {

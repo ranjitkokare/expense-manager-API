@@ -4,14 +4,20 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserModel {
-	
+
 	@NotBlank(message = "Name should not be empty")
 	private String name;
-	
+
 	@NotNull(message = "Email should notbe empty")
 	@Email(message = "Enter valid email")
 	private String email;

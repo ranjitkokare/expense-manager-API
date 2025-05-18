@@ -1,11 +1,10 @@
 package in.ranjitkokare.expensetrackerapi.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import in.ranjitkokare.expensetrackerapi.entity.CategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import in.ranjitkokare.expensetrackerapi.entity.CategoryEntity;
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -13,47 +12,47 @@ import in.ranjitkokare.expensetrackerapi.entity.CategoryEntity;
  * @author Ranjit Kokare
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>{
-	
+
 	/**
 	 * Finder method to retrieve the categories by user id
 	 * @param userId
 	 * @return list
 	 */
 	List<CategoryEntity> findByUserId(Long userId);
-	
+
 	//finder method here 1st to delete category we have to read category
 	/**
 	 * Finder method to fetch the category by user id and category id
@@ -61,10 +60,10 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>{
 	 * @param categoryId
 	 * @return Optional<CategoryEntity>
 	 */
-	Optional<CategoryEntity> findByUserIdAndCategoryId(Long id, String categoryId); 
+	Optional<CategoryEntity> findByUserIdAndCategoryId(Long id, String categoryId);
 	//we might get category or not thats why optional
-	
-	
+
+
 	//checking for existing name for category name
 	/**
 	 * It checks whether category is present or not by user id and category name
@@ -73,8 +72,8 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>{
 	 * @return boolean
 	 */
 	boolean existsByNameAndUserId(String name , Long userId);
-	
-	
+
+
 	/**
 	 * It retrieves the category by name and user id
 	 * @param name

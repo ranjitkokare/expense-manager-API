@@ -1,14 +1,13 @@
 package in.ranjitkokare.expensetrackerapi.config;
 
+import in.ranjitkokare.expensetrackerapi.security.CustomUserDetailsService;
+import in.ranjitkokare.expensetrackerapi.security.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,9 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import in.ranjitkokare.expensetrackerapi.security.CustomUserDetailsService;
-import in.ranjitkokare.expensetrackerapi.security.JwtRequestFilter;
 
 @Configuration
 public class WebSecurityConfig {
@@ -52,14 +48,14 @@ public class WebSecurityConfig {
 		 * UsernamePasswordAuthenticationFilter.class); http.httpBasic();// here we omit
 		 * FormBasic because we not uses front end forms return http.build();
 		 */
-		
+
 		return http.csrf(csrf -> csrf.disable())
-			.authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/register").permitAll().anyRequest().authenticated())
-			//telling spring security not to maintain session
-			.sessionManagement(session -> session.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
-			.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-			.httpBasic(Customizer.withDefaults())
-			.build(); //builder pattern
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/register").permitAll().anyRequest().authenticated())
+				//telling spring security not to maintain session
+				.sessionManagement(session -> session.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
+				.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+				.httpBasic(Customizer.withDefaults())
+				.build(); //builder pattern
 	}
 
 	@Bean

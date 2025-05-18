@@ -1,18 +1,6 @@
 package in.ranjitkokare.expensetrackerapi.service;
 
 
-import java.sql.Date;
-
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import in.ranjitkokare.expensetrackerapi.dto.CategoryDTO;
 import in.ranjitkokare.expensetrackerapi.dto.ExpenseDTO;
 import in.ranjitkokare.expensetrackerapi.entity.CategoryEntity;
@@ -21,18 +9,26 @@ import in.ranjitkokare.expensetrackerapi.exceptions.ResourceNotFoundException;
 import in.ranjitkokare.expensetrackerapi.repository.CategoryRepository;
 import in.ranjitkokare.expensetrackerapi.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
-	
-	
+
+
 	private final ExpenseRepository expenseRepo;
-	
-	
+
+
 	private final UserService userService;
 	private final CategoryRepository categoryRepository;
-	
+
 	@Override
 	public List<ExpenseDTO> getAllExpenses(Pageable page) {
 		//to get expense of Specific User
@@ -67,7 +63,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		 * expense.setUser(userService.getLoggedInUser()); return
 		 * expenseRepo.save(expense);
 		 */
-		
+
 		//check the existence of category
 		Optional<CategoryEntity> optionalCategory = categoryRepository.findByUserIdAndCategoryId(userService.getLoggedInUser().getId(), expenseDTO.getCategoryId());
 		if (!optionalCategory.isPresent()) {
@@ -99,9 +95,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	private CategoryDTO mapToCategoryDTO(CategoryEntity category) {
 		return CategoryDTO.builder()
-					.name(category.getName())
-					.categoryId(category.getCategoryId())
-					.build();
+				.name(category.getName())
+				.categoryId(category.getCategoryId())
+				.build();
 	}
 
 	private Expense mapToEntity(ExpenseDTO expenseDTO) {
@@ -118,7 +114,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	public ExpenseDTO updateExpenseDetails(String expenseId, ExpenseDTO expenseDTO) {
 		//for getting existing expense 
 		Expense existingEexpense = getExpenseEntity(expenseId);
-		
+
 		if(expenseDTO.getCategoryId() != null) {
 			Optional<CategoryEntity> optionalCategory = categoryRepository.findByUserIdAndCategoryId(userService.getLoggedInUser().getId(), expenseDTO.getCategoryId());
 			if (!optionalCategory.isPresent()) {
@@ -136,8 +132,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	//Filtering Records
-	
-	
+
+
 	//Filter by Category
 	@Override
 	public List<ExpenseDTO> readByCategory(String category, Pageable page) {//conversion to list
@@ -158,7 +154,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public List<ExpenseDTO> readByDate(Date startDate, Date endDate, Pageable page) {
-		
+
 		if (startDate == null) {
 			startDate = new Date(0);//starting date if not provided initial date
 		}
@@ -169,8 +165,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 				startDate, endDate, page).toList();
 		return list.stream().map(expense -> mapToDTO(expense)).collect(Collectors.toList());
 	}
-	
-	
-	
-	
+
+
+
+
 }
