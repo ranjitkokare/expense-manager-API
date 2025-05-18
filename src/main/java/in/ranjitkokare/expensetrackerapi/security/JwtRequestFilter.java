@@ -1,5 +1,6 @@
 package in.ranjitkokare.expensetrackerapi.security;
 
+import in.ranjitkokare.expensetrackerapi.service.BlackListService;
 import in.ranjitkokare.expensetrackerapi.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -24,6 +25,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 
+	@Autowired
+	private BlackListService blackListService;
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -37,6 +41,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			//here we get only token and ignore Bearer
 			jwtToken = requestTokenHeader.substring(7);
+
+//			when user login check token is blacklisted or not
+			if(jwtToken != null && blackListService.isTokenBlacklisted(jwtToken)) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+				return;
+			}
 
 			try {//now we will get the username from jwtToken
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
