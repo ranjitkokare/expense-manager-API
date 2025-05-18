@@ -41,7 +41,7 @@ public class Expense {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "category_id",nullable = false)//many expense are mapped to a single category
 	@OnDelete(action = OnDeleteAction.RESTRICT) //throw exception that some of the expenses are mapped to the category
-	//first delete that expenses and then you can delete the category
+	//first delete that expenses, and then you can delete the category
 	private CategoryEntity category;
 
 	private Date date;

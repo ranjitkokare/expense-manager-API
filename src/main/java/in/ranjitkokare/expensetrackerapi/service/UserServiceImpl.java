@@ -1,33 +1,30 @@
 package in.ranjitkokare.expensetrackerapi.service;
 
+import in.ranjitkokare.expensetrackerapi.entity.User;
+import in.ranjitkokare.expensetrackerapi.entity.UserModel;
+import in.ranjitkokare.expensetrackerapi.exceptions.ItemAlreadyExistsException;
+import in.ranjitkokare.expensetrackerapi.exceptions.ResourceNotFoundException;
+import in.ranjitkokare.expensetrackerapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import in.ranjitkokare.expensetrackerapi.entity.User;
-import in.ranjitkokare.expensetrackerapi.entity.UserModel;
-import in.ranjitkokare.expensetrackerapi.exceptions.ItemAlreadyExistsException;
-import in.ranjitkokare.expensetrackerapi.exceptions.ResourceNotFoundException;
-import in.ranjitkokare.expensetrackerapi.repository.UserRepository;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
-	
+
 	private final PasswordEncoder bcryptEncoder;
 	//inject UserRepository
-
 	private final UserRepository userRepository;
-	
+
 	@Override
 	public User createUser(UserModel user) {
 		//before saving user details check for the email existence
-		if(userRepository.existsByEmail(user.getEmail())) {
+		if(Boolean.TRUE.equals(userRepository.existsByEmail(user.getEmail()))) {
 			throw new ItemAlreadyExistsException("User is laready registerd with email:"+user.getEmail());
 		}
 		User newUser = new User();
@@ -57,17 +54,17 @@ public class UserServiceImpl implements UserService{
 	public void deleteUser() {
 		User existingUser = readUser();	//return existing user
 		userRepository.delete(existingUser);
-		
+
 	}
 
 	@Override
 	public User getLoggedInUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
+
 		String email = authentication.getName();
-		
+
 		return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found for the email: "+email));
 	}
-	
-	
+
+
 }
