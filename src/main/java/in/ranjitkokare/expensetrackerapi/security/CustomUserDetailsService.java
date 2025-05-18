@@ -1,19 +1,20 @@
 package in.ranjitkokare.expensetrackerapi.security;
 
-import java.util.ArrayList;
-
+import in.ranjitkokare.expensetrackerapi.entity.User;
+import in.ranjitkokare.expensetrackerapi.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import in.ranjitkokare.expensetrackerapi.entity.User;
-import in.ranjitkokare.expensetrackerapi.repository.UserRepository;
+import java.util.ArrayList;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService{
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
